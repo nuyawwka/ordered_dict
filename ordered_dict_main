@@ -7,14 +7,14 @@ class MyOrderedDict(object):
         return self.dict.get(k)
 
     def add(self, k, v):
-        self.dict[k] = v
-        self.keys.append(k)
-        
         if k in self.dict:
-            for i in range(len(self.keys) - 2, -1, -1):
+            for i in range(len(self.keys) - 1, -1, -1):
                 if self.keys[i] == k:
                     self.keys.pop(i)
                     break  
+                    
+        self.dict[k] = v
+        self.keys.append(k)
                     
 d = MyOrderedDict()
 d.add('a', 1)
@@ -24,3 +24,4 @@ d.add('a', 4)
 
 for i in d.keys:
     print(i, d.get(i))
+
