@@ -11,12 +11,10 @@ class MyOrderedDict(object):
         self.keys.append(k)
         
         if len(self.keys) > len(self.dict):
-            t = set()
-            for i in range(len(self.keys) - 1, -1, -1):
-                if self.keys[i] in t:
+            for i in range(len(self.keys) - 2, -1, -1):
+                if self.keys[i] == k:
                     self.keys.pop(i)
-                else:
-                    t.add(self.keys[i])  
+                    break  
                     
 d = MyOrderedDict()
 d.add('a', 1)
