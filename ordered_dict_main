@@ -1,0 +1,28 @@
+class MyOrderedDict(object):
+    def __init__(self):
+        self.dict = {}
+        self.keys = []
+
+    def get(self, k):
+        return self.dict.get(k)
+
+    def add(self, k, v):
+        self.dict[k] = v
+        self.keys.append(k)
+        
+        if len(self.keys) > len(self.dict):
+            t = set()
+            for i in range(len(self.keys) - 1, -1, -1):
+                if self.keys[i] in t:
+                    self.keys.pop(i)
+                else:
+                    t.add(self.keys[i])  
+                    
+d = MyOrderedDict()
+d.add('a', 1)
+d.add('b', 2)
+d.add('c', 3)
+d.add('a', 4)
+
+for i in d.keys:
+    print(i, d.get(i))
