@@ -27,7 +27,7 @@ class MyOrderedDict(object):
         for i in range(j, len(self._keys)):
             self._dict[self._keys[i]][1] -= 1
             
-        return self._dict.pop(k)
+        return self._dict.pop(k)[0]
             
 #-------------------------------------------
                     
