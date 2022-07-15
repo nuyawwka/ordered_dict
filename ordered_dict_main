@@ -3,19 +3,33 @@ class MyOrderedDict(object):
         self._dict = {}
         self._keys = []
 
-    def get(self, k):
-        return self._dict.get(k, [None])[0]
+    def get(self, k, dflt=None):
+        return self._dict.get(k, [dflt])[0]
     
     def keys(self):
         for i in self._keys:
             yield i
 
-    def add(self, k, v):
+    def add(self, k, v):96
         if k in self._dict:
-            self._keys.pop(self._dict[k][1])
+            self.pop(k)
             
-        self._dict[k] = (v, len(self._keys))
+        self._dict[k] = [v, len(self._keys)]
         self._keys.append(k)
+        
+    def pop(self, k):
+        if k not in self._dict:
+            raise Exception('key error: %s' % str(k))
+
+        j = self._dict[k][1]
+        self._keys.pop(j)
+        
+        for i in range(j, len(self._keys)):
+            self._dict[self._keys[i]][1] -= 1
+            
+        return self._dict.pop(k)
+            
+#-------------------------------------------
                     
 d = MyOrderedDict()
 d.add('a', 1)
