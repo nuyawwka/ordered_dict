@@ -10,7 +10,7 @@ class MyOrderedDict(object):
         for i in self._keys:
             yield i
 
-    def add(self, k, v):96
+    def add(self, k, v):
         if k in self._dict:
             self.pop(k)
             
