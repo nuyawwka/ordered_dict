@@ -24,8 +24,9 @@ class MyOrderedDict(object):
         j = self._dict[k][1]
         self._keys.pop(j)
         
-        ## replacing keys by doubly linked ##
-        ## list makes following unecessary ##
+        #------------------------------------------------------------------------------------------------------#
+        # implementing _keys as a doubly linked list makes an index adjustment moot and the pop operation O(1) #
+        #------------------------------------------------------------------------------------------------------#
         
         for i in range(j, len(self._keys)):
             self._dict[self._keys[i]][1] -= 1
