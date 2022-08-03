@@ -33,6 +33,8 @@ class DoublyLinkedList(object):
         else:
             node.prev.next = node.next
             node.next.prev = node.prev
+            
+#-------------------------------------------
 
 class MyOrderedDict(object):
     def __init__(self):
