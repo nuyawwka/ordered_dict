@@ -1,44 +1,77 @@
+class DoublyLinkedList(object):
+    class Node(object):
+        def __init__(self, v):
+            self.val  = v
+            self.next = None
+            self.prev = None
+        
+    def __init__(self):
+        self.head = None
+        self.tail = None
+    
+    def append(self, v):
+        node = self.Node(v)
+        if self.tail:
+            node.prev = self.tail
+            self.tail.next = node
+            self.tail = node
+        else:
+            self.head = node
+            self.tail = node
+        return node
+         
+    def delete(self, node):
+        if self.head == self.tail:
+            self.head = None
+            self.tail = None
+        elif node == self.head:
+            self.head = self.head.next
+            self.head.prev = None
+        elif node == self.tail:
+            self.tail = self.tail.prev
+            self.tail.next = None
+        else:
+            node.prev.next = node.next
+            node.next.prev = node.prev
+
 class MyOrderedDict(object):
     def __init__(self):
         self._dict = {}
-        self._keys = []
+        self._keys = DoublyLinkedList()
 
     def get(self, k, dflt=None):
         return self._dict.get(k, [dflt])[0]
     
     def keys(self):
-        for i in self._keys:
-            yield i
+        node = self._keys.head
+        while node:
+            yield node.val
+            node = node.next
 
-    def add(self, k, v):
+    def add(self, k, v):            
         if k in self._dict:
             self.pop(k)
             
-        self._dict[k] = [v, len(self._keys)]
-        self._keys.append(k)
-        
+        self._dict[k] = [v, self._keys.append(k)]
+
     def pop(self, k):
         if k not in self._dict:
             raise Exception('key error: %s' % str(k))
 
-        j = self._dict[k][1]
-        self._keys.pop(j)
-        
-        #------------------------------------------------------------------------------------------------------#
-        # implementing _keys as a doubly linked list makes an index adjustment moot and the pop operation O(1) #
-        #------------------------------------------------------------------------------------------------------#
-        
-        for i in range(j, len(self._keys)):
-            self._dict[self._keys[i]][1] -= 1
-            
+        self._keys.delete(self._dict[k][1])
         return self._dict.pop(k)[0]
             
 #-------------------------------------------
-                    
+
 d = MyOrderedDict()
 d.add('a', 1)
 d.add('b', 2)
 d.add('c', 3)
+
+for i in d.keys():
+    print(i, d.get(i))
+    
+print()
 d.add('a', 4)
 
 for i in d.keys():
