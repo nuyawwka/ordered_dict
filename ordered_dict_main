@@ -33,13 +33,14 @@ class DoublyLinkedList(object):
         else:
             node.prev.next = node.next
             node.next.prev = node.prev
-            
-#-------------------------------------------
 
 class MyOrderedDict(object):
     def __init__(self):
         self._dict = {}
         self._keys = DoublyLinkedList()
+        
+    def __iter__(self):
+        return self.keys()
 
     def get(self, k, dflt=None):
         return self._dict.get(k, [dflt])[0]
@@ -76,5 +77,11 @@ for i in d.keys():
 print()
 d.add('a', 4)
 
-for i in d.keys():
+for i in d:
+    print(i, d.get(i))
+
+print()
+d.pop('b')
+
+for i in d:
     print(i, d.get(i))
