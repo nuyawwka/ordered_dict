@@ -71,7 +71,7 @@ d.add('a', 1)
 d.add('b', 2)
 d.add('c', 3)
 
-for i in d.keys():
+for i in d:
     print(i, d.get(i))
     
 print()
